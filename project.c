@@ -14,5 +14,10 @@ struct process{
 int main()
 {
 	printf("Enter the no. of Process\n");
-	scanf("%d",&no_process);
+	scanf("%d",&nProcess);
+	while(nProcess < 1){
+		printf("Enter Process Count greater than one.\n");
+		scanf("%d",&nProcess);
+	}
+	process pros[nProcess];
 }
