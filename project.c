@@ -11,6 +11,11 @@ struct process{
 	double priority ;
 };
 
+void sortOnArrivalT(struct process pros[]);
+void startProcessing(struct process pros[]);
+void updateProcesses(struct process pros[], int processTime, int currentProcess);
+void printProcess(struct process pros[]);
+
 int main()
 {
 	printf("Enter the no. of Process\n");
@@ -42,4 +47,8 @@ int main()
 		}
 		printf("\n");
 	}
+	sortOnArrivalT(pros);
+	startProcessing(pros);
+	printProcess(pros);
+	return 0;
 }
