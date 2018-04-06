@@ -11,10 +11,10 @@ struct process{
 	double priority ;
 };
 
-void sortOnArrivalT(struct process pros[]);
-void startProcessing(struct process pros[]);
-void updateProcesses(struct process pros[], int processTime, int currentProcess);
-void printProcess(struct process pros[]);
+void sortOnArrival(struct process proc[]);
+void startProcessing(struct process proc[]);
+void updateProcesses(struct process proc[], int processTime, int currentProcess);
+void printProcess(struct process proc[]);
 
 int main()
 {
@@ -24,31 +24,53 @@ int main()
 		printf("Enter Process Count greater than one.\n");
 		scanf("%d",&nProcess);
 	}
-	process pros[nProcess];
+	process proc[nProcess];
 
 	for(int i=0; i<nProcess; ++i){
 		printf("Enter the input for Process %d\n", i+1 );
-		pros[i].id = i+1;
-		pros[i].priority = 1;
-		pros[i].waitTime = 0;
-		pros[i].arrivalTime = 0;
-		while(pros[i].arrivalTime > -1){
+		proc[i].id = i+1;
+		proc[i].priority = 1;
+		proc[i].waitTime = 0;
+		proc[i].arrivalTime = 0;
+		while(proc[i].arrivalTime > -1){
 			printf("Enter Arrival Time=");
-			scanf("%d",&pros[i].arrivalTime);
-			if(pros[i].arrivalTime > -1)
+			scanf("%d",&proc[i].arrivalTime);
+			if(proc[i].arrivalTime > -1)
 				break;
 		}
-		pros[i].burstTime = 0;
-		while(pros[i].burstTime > -1){	
+		proc[i].burstTime = 0;
+		while(proc[i].burstTime > -1){	
 			printf("Enter Burst Time=");
-			scanf("%d",&pros[i].burstTime);
-			if(pros[i].burstTime > -1)
+			scanf("%d",&proc[i].burstTime);
+			if(proc[i].burstTime > -1)
 				break;
 		}
 		printf("\n");
 	}
-	sortOnArrivalT(pros);
+	sortOnArrival(pros);
 	startProcessing(pros);
 	printProcess(pros);
 	return 0;
 }
+
+void sortOnArrival(struct process proc[]){
+	for(int i=0; i<nProcess-1; ++i){
+		for(int j=i+1; j<nProcess; ++j){
+			if(proc[i].arvTime > proc[j].arvTime){
+				process a = proc[j];
+				proc[j] = proc[i];
+				proc[i] = a;
+			}
+		}
+	}
+}
+
+void startProcessing(struct process proc[]){
+	int currentProcess = 0;
+	while(currentProcess < no_process){
+		process topProcess = proc[currentProcess++];
+		processTime =+ topProcess.burstTime;
+		updateProcesses(pros,processTime,currentProcess);
+	}
+}
+
