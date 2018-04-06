@@ -13,7 +13,7 @@ struct process{
 
 void sortOnArrival(struct process proc[]);
 void startProcessing(struct process proc[]);
-void updateProcesses(struct process proc[], int processTime, int currentProcess);
+void updateProcesses(struct process proc[], int pTime, int currentProcess);
 void printProcess(struct process proc[]);
 
 int main()
@@ -56,7 +56,7 @@ int main()
 void sortOnArrival(struct process proc[]){
 	for(int i=0; i<nProcess-1; ++i){
 		for(int j=i+1; j<nProcess; ++j){
-			if(proc[i].arvTime > proc[j].arvTime){
+			if(proc[i].arrivalTime > proc[j].arrivalTime){
 				process a = proc[j];
 				proc[j] = proc[i];
 				proc[i] = a;
@@ -67,10 +67,30 @@ void sortOnArrival(struct process proc[]){
 
 void startProcessing(struct process proc[]){
 	int currentProcess = 0;
-	while(currentProcess < no_process){
+	while(currentProcess < nProcess){
 		process topProcess = proc[currentProcess++];
-		processTime =+ topProcess.burstTime;
-		updateProcesses(pros,processTime,currentProcess);
+		pTime =+ topProcess.burstTime;
+		updateProcesses(pros,pTime,currentProcess);
+	}
+}
+void updateProcesses(struct process pros[], int pTime, int currentProcess){
+	for(int i = currentProcess; i<nProcess; i++){
+		float waitTime = pTime - pros[i].arrivalTime;
+		pros[i].priority = 1  + waitTime/(float)pros[i].burstTime;
+	}
+	for(int i=currentProcess; i<nProcess-1; i++){
+		for(int j=i+1; j<nProcess; j++){
+			if(pros[i].priority < pros[j].priority){
+				struct process a = pros[j];
+				pros[j] = pros[i];
+				pros[i] = a;
+			}
+		}
 	}
 }
 
+void printProcess(struct process pros[]){
+	for(int i=0; i<nProcess; i++){
+		printf("The Proccess :%d arivlTime : %d  burstTime : %d\n\n", pros[i].id, pros[i].arrivalTime, pros[i].burstTime);
+	}
+}
