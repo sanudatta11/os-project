@@ -24,7 +24,7 @@ int main()
 		printf("Enter Process Count greater than one.\n");
 		scanf("%d",&nProcess);
 	}
-	process proc[nProcess];
+	struct process proc[nProcess];
 
 	for(int i=0; i<nProcess; ++i){
 		printf("Enter the input for Process %d\n", i+1 );
@@ -47,9 +47,9 @@ int main()
 		}
 		printf("\n");
 	}
-	sortOnArrival(pros);
-	startProcessing(pros);
-	printProcess(pros);
+	sortOnArrival(proc);
+	startProcessing(proc);
+	printProcess(proc);
 	return 0;
 }
 
@@ -57,7 +57,7 @@ void sortOnArrival(struct process proc[]){
 	for(int i=0; i<nProcess-1; ++i){
 		for(int j=i+1; j<nProcess; ++j){
 			if(proc[i].arrivalTime > proc[j].arrivalTime){
-				process a = proc[j];
+				struct process a = proc[j];
 				proc[j] = proc[i];
 				proc[i] = a;
 			}
@@ -68,29 +68,29 @@ void sortOnArrival(struct process proc[]){
 void startProcessing(struct process proc[]){
 	int currentProcess = 0;
 	while(currentProcess < nProcess){
-		process topProcess = proc[currentProcess++];
+		struct process topProcess = proc[currentProcess++];
 		pTime =+ topProcess.burstTime;
-		updateProcesses(pros,pTime,currentProcess);
+		updateProcesses(proc,pTime,currentProcess);
 	}
 }
-void updateProcesses(struct process pros[], int pTime, int currentProcess){
+void updateProcesses(struct process proc[], int pTime, int currentProcess){
 	for(int i = currentProcess; i<nProcess; i++){
-		float waitTime = pTime - pros[i].arrivalTime;
-		pros[i].priority = 1  + waitTime/(float)pros[i].burstTime;
+		float waitTime = pTime - proc[i].arrivalTime;
+		proc[i].priority = 1  + waitTime/(float)proc[i].burstTime;
 	}
 	for(int i=currentProcess; i<nProcess-1; i++){
 		for(int j=i+1; j<nProcess; j++){
-			if(pros[i].priority < pros[j].priority){
-				struct process a = pros[j];
-				pros[j] = pros[i];
-				pros[i] = a;
+			if(proc[i].priority < proc[j].priority){
+				struct process a = proc[j];
+				proc[j] = proc[i];
+				proc[i] = a;
 			}
 		}
 	}
 }
 
-void printProcess(struct process pros[]){
+void printProcess(struct process proc[]){
 	for(int i=0; i<nProcess; i++){
-		printf("The Proccess :%d arivlTime : %d  burstTime : %d\n\n", pros[i].id, pros[i].arrivalTime, pros[i].burstTime);
+		printf("The Proccess :%d arivlTime : %d  burstTime : %d\n\n", proc[i].id, proc[i].arrivalTime, proc[i].burstTime);
 	}
 }
