@@ -72,14 +72,14 @@ int main()
 		while(proc[i].arrivalTime > -1){
 			printf("Enter Arrival Time=");
 			scanf("%d",&proc[i].arrivalTime);
-			if(proc[i].arrivalTime > -1)
+			if(proc[i].arrivalTime >= 0)
 				break;
 		}
 		proc[i].burstTime = 0;
 		while(proc[i].burstTime > -1){	
 			printf("Enter Burst Time=");
 			scanf("%d",&proc[i].burstTime);
-			if(proc[i].burstTime > -1)
+			if(proc[i].burstTime >= 0)
 				break;
 		}
 		printf("\n");
